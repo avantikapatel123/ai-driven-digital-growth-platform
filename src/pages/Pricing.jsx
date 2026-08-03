@@ -5,6 +5,7 @@ import Modal from '../components/common/Modal';
 import InputField from '../components/common/InputField';
 import Button from '../components/common/Button';
 import { CreditCard, CheckCircle2 } from 'lucide-react';
+import { getPricingPlans, submitPaymentCheckout } from '../services/pricingService';
 
 export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -21,51 +22,7 @@ export default function Pricing() {
   });
   const [errors, setErrors] = useState({});
 
-  const plans = [
-    {
-      name: 'Starter',
-      priceMonthly: 29,
-      priceAnnual: 23,
-      description: 'Essential growth tools for early stage startups, local brands, and side projects.',
-      features: [
-        { text: '1 AI Business Audit / mo', included: true },
-        { text: 'Basic SWOT Benchmarking', included: true },
-        { text: '5 Referral Link invites', included: true },
-        { text: 'WhatsApp Support button', included: true },
-        { text: 'Continuous recommendations', included: false },
-        { text: 'Competitor Backlink Audits', included: false },
-      ]
-    },
-    {
-      name: 'Growth Pro',
-      priceMonthly: 79,
-      priceAnnual: 63,
-      isPopular: true,
-      description: 'Full strategic package for scaling brands, e-commerce storefronts, and SaaS platforms.',
-      features: [
-        { text: 'Unlimited AI Business Audits', included: true },
-        { text: 'Advanced SWOT Benchmarking', included: true },
-        { text: 'Unlimited Referral Invites', included: true },
-        { text: 'Priority WhatsApp Support', included: true },
-        { text: 'Continuous recommendations', included: true },
-        { text: 'Competitor Backlink Audits', included: false },
-      ]
-    },
-    {
-      name: 'Enterprise',
-      priceMonthly: 199,
-      priceAnnual: 159,
-      description: 'Premium growth strategy and consultation for established organizations and agencies.',
-      features: [
-        { text: 'Unlimited AI Business Audits', included: true },
-        { text: 'Advanced SWOT Benchmarking', included: true },
-        { text: 'Unlimited Referral Invites', included: true },
-        { text: 'Dedicated WhatsApp Account Manager', included: true },
-        { text: 'Continuous recommendations', included: true },
-        { text: 'Competitor Backlink Audits', included: true },
-      ]
-    }
-  ];
+  const plans = getPricingPlans();
 
   const handleSelectPlan = (plan) => {
     setSelectedPlan(plan);
@@ -113,21 +70,26 @@ export default function Pricing() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleCheckoutSubmit = (e) => {
+  const handleCheckoutSubmit = async (e) => {
     e.preventDefault();
     if (!validateCheckout()) return;
 
     setCheckoutLoading(true);
-    setTimeout(() => {
-      setCheckoutLoading(false);
+    try {
+      await submitPaymentCheckout(checkoutData);
       setCheckoutStep('success');
-    }, 1500);
+    } catch (err) {
+      console.error('Checkout error:', err);
+      setErrors({ form: 'Payment processing failed. Please try again.' });
+    } finally {
+      setCheckoutLoading(false);
+    }
   };
 
   const pageContainerStyle = {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '4rem 2.5rem',
+    padding: 'var(--page-padding-y) var(--page-padding-x)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -152,7 +114,7 @@ export default function Pricing() {
 
   const gridStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
     gap: '2.5rem',
     width: '100%',
     maxWidth: '1100px',
@@ -206,7 +168,9 @@ export default function Pricing() {
       >
         {checkoutStep === 'form' ? (
           <form onSubmit={handleCheckoutSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'var(--social-bg)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border)', marginBottom: '0.5rem' }}>
+            {errors.form && <div style={{ color: '#ef4444', fontSize: '0.85rem' }}>{errors.form}</div>}
+            
+            <div style={{ display: 'flex', justifyContext: 'space-between', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'var(--social-bg)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border)', marginBottom: '0.5rem' }}>
               <div>
                 <span style={{ fontWeight: '700', color: 'var(--text-h)', display: 'block' }}>{selectedPlan?.name} Plan</span>
                 <span style={{ fontSize: '0.8rem', color: 'var(--text)' }}>{selectedPlan && priceBilledText(selectedPlan)}</span>

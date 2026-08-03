@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 function Footer() {
  
   const footerStyle = {
-    backgroundColor: "#151b28", 
-    color: "#9ca3af",
-    padding: "3rem 2.5rem 1.5rem 2.5rem",
+    backgroundColor: "rgba(9, 8, 15, 0.98)", 
+    color: "var(--text)",
+    padding: "3rem var(--page-padding-x) 1.5rem var(--page-padding-x)",
     fontSize: "0.9rem",
     marginTop: "auto",
+    borderTop: "1px solid var(--border)",
   };
 
   const containerStyle = {
@@ -63,7 +64,7 @@ function Footer() {
   };
 
   const hrStyle = {
-    borderColor: "#1f2937",
+    borderColor: "var(--border)",
     margin: "2.5rem 0 1.5rem 0",
     borderStyle: "solid",
     borderWidth: "1px 0 0 0",

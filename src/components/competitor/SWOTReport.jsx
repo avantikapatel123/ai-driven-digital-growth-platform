@@ -101,7 +101,7 @@ export default function SWOTReport({ report, onReset }) {
 
   const swotGridStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))',
     gap: '1.5rem',
     padding: '1rem 0',
   };

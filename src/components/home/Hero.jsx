@@ -12,7 +12,7 @@ export default function Hero() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '6rem 2.5rem',
+    padding: 'var(--section-padding-y) var(--section-padding-x)',
     gap: '3rem',
     maxWidth: '1200px',
     margin: '0 auto',
@@ -45,7 +45,7 @@ export default function Hero() {
   };
 
   const titleStyle = {
-    fontSize: '3.5rem',
+    fontSize: 'clamp(2rem, 8vw, 3.5rem)',
     fontWeight: '800',
     lineHeight: '1.15',
     color: 'var(--text-h)',

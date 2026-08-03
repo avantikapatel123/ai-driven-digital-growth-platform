@@ -7,7 +7,7 @@ export default function ContactCTA() {
   const [hovered, setHovered] = useState(false);
 
   const containerStyle = {
-    padding: '5rem 2.5rem',
+    padding: 'var(--section-padding-y) var(--section-padding-x)',
     maxWidth: '1200px',
     margin: '0 auto',
     borderTop: '1px solid var(--border)',
@@ -17,7 +17,7 @@ export default function ContactCTA() {
     background: 'linear-gradient(135deg, #1e1b4b 0%, #311042 100%)',
     border: '1px solid rgba(99, 102, 241, 0.25)',
     borderRadius: '24px',
-    padding: '4rem 2.5rem',
+    padding: 'var(--page-padding-y) var(--page-padding-x)',
     textAlign: 'center',
     position: 'relative',
     overflow: 'hidden',

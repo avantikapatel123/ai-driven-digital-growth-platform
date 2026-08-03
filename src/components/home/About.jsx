@@ -5,7 +5,7 @@ export default function About() {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   const sectionStyle = {
-    padding: '5rem 2.5rem',
+    padding: 'var(--section-padding-y) var(--section-padding-x)',
     maxWidth: '1200px',
     margin: '0 auto',
     textAlign: 'center',

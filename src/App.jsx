@@ -9,6 +9,8 @@ import CompetitorAnalysis from "./pages/CompetitorAnalysis";
 import Pricing from "./pages/Pricing";
 import Referral from "./pages/Referral";
 import Contact from "./pages/Contact";
+import Recommendations from "./pages/Recommendations";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/referral" element={<Referral />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/recommendations" element={<Recommendations />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer/>
     </>

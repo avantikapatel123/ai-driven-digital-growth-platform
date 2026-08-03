@@ -4,14 +4,11 @@ import ReferralCard from '../components/referral/ReferralCard';
 import ReferralLink from '../components/referral/ReferralLink';
 import Earnings from '../components/referral/Earnings';
 import { Gift, Share2, Award, Zap, HelpCircle } from 'lucide-react';
+import { getReferralStats, getReferralEarningsHistory } from '../services/referralService';
 
 export default function Referral() {
-  const stats = {
-    totalInvites: 36,
-    successfulConversions: 11,
-    totalEarnings: 390,
-    pendingCommission: 120
-  };
+  const stats = getReferralStats();
+  const history = getReferralEarningsHistory();
 
   const steps = [
     {
@@ -34,7 +31,7 @@ export default function Referral() {
   const pageContainerStyle = {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '4rem 2.5rem',
+    padding: 'var(--page-padding-y) var(--page-padding-x)',
     display: 'flex',
     flexDirection: 'column',
     gap: '2.5rem',
@@ -96,7 +93,7 @@ export default function Referral() {
 
   const splitGridStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 450px), 1fr))',
     gap: '2.5rem',
     width: '100%',
     alignItems: 'start',
@@ -171,7 +168,7 @@ export default function Referral() {
           subtitle="Real-time conversions and credit history from your referral channels."
         >
           <div style={{ marginTop: '0.5rem' }}>
-            <Earnings />
+            <Earnings history={history} />
           </div>
         </ReferralCard>
 
